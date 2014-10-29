@@ -1,0 +1,30 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity$PlaceholderFragment">
+
+    <ListView
+        android:id="@+id/listview_pokemon"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible">
+    </ListView>
+
+    <TextView
+        android:id="@+id/textview_loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/loading_pokemon"
+        android:gravity="center"
+        android:visibility="invisible"/>
+
+    <ProgressBar
+        android:id="@+id/progressbar_loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:indeterminate="true"
+        android:gravity="center"
+        android:visibility="invisible"/>
+
+</FrameLayout>

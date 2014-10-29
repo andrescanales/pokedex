@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ListPreference
+        android:title="@string/pref_rotation_label"
+        android:key="@string/pref_rotation_key"
+        android:defaultValue="@string/pref_rotation_label_default"
+        android:entryValues="@array/pref_rotation_values"
+        android:entries="@array/pref_rotation_options" />
+
+</PreferenceScreen>
