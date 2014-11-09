@@ -1,30 +1,48 @@
 package com.andrescanales.pokedex;
 
-import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-
 
 public class PokemonDetail extends ActionBarActivity {
+
+    private String mCurrentNombre;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pokemon_detail);
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment())
-                    .commit();
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+
+        if (savedInstanceState != null) {
+            mCurrentNombre = savedInstanceState.getString("mCurrentNombre");
+        } else {
+            String nombre = getIntent().getStringExtra("nombre");
+            mCurrentNombre = nombre;
+        }
+
+        PokemonDetailFragment fragment = PokemonDetailFragment.newInstance(mCurrentNombre);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.pokemon_detail_container, fragment).commit();
     }
 
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("mCurrentNombre", mCurrentNombre);
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -35,38 +53,13 @@ public class PokemonDetail extends ActionBarActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_settings) {
             return true;
+        }else if(id == android.R.id.home){
+            NavUtils.navigateUpFromSameTask(this);
+            return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-
-        public PlaceholderFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_pokemon_detail, container, false);
-
-            // Recibimos la data que se nos envía de la actividad padre
-            Intent intent = getActivity().getIntent();
-
-            if (intent != null && intent.hasExtra(Intent.EXTRA_TEXT)){
-                String pokemonStr = intent.getStringExtra(Intent.EXTRA_TEXT);
-                ((TextView) rootView.findViewById(R.id.detail_text)).setText(pokemonStr);
-            }
-
-            return rootView;
-        }
     }
 }

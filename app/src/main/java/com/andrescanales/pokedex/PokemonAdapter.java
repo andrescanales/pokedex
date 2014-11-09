@@ -43,7 +43,17 @@ public class PokemonAdapter extends ArrayAdapter<Pokemon> {
         ViewHolder holder = (ViewHolder) view.getTag();
         Pokemon p = (Pokemon)getItem(i);
         holder.textView.setText(p.getNombre());
-        Picasso.with(context).load(p.getUrlImage()).into(holder.imageView);
+        //try {
+        if( p.getUrlImage() == null || p.getUrlImage().isEmpty() ) {
+            Picasso.with(context).load(R.drawable.ic_launcher).into(holder.imageView);
+        }
+        else{
+            Picasso.with(context).load(p.getUrlImage()).error(R.drawable.ic_launcher).into(holder.imageView);
+        }
+        //Picasso.with(context).load(p.getUrlImage()).into(holder.imageView);
+        //}catch (IOException){
+
+        //}
         return view;
     }
 

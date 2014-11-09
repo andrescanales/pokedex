@@ -6,7 +6,7 @@ package com.andrescanales.pokedex;
 public class Pokemon {
     // In this class we just have a few setters and getters
     private String nombre;
-    private String urlImage;
+    private String avatar;
 
     public String getNombre(){
         return nombre;
@@ -14,10 +14,8 @@ public class Pokemon {
     public void setNombre(String nombre){
         this.nombre = nombre;
     }
-    public String getUrlImage(){
-        return urlImage;
-    }
-    public void setUrlImage(String urlImage){
-        this.urlImage = urlImage;
+    public String getUrlImage(){ return avatar; }
+    public void setUrlImage(String avatar){
+        this.avatar = avatar;
     }
 }

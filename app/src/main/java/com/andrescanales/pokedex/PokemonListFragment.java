@@ -5,12 +5,16 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 //import android.app.Fragment;
 
@@ -37,18 +41,6 @@ public class PokemonListFragment extends Fragment {
         progressBar = (ProgressBar)rootView.findViewById(R.id.progressbar_loading);
         listView = (ListView) rootView.findViewById(R.id.listview_pokemon);
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                // Here we are going to listen when an list element being touched to launch detail activity
-
-                //String pokemonStr = pokemonAdapter.getItem(position);
-                //Intent intent = new Intent(getActivity(), PokemonDetail.class).putExtra(Intent.EXTRA_TEXT, pokemonStr);
-                //startActivity(intent);
-                //Parceable
-            }
-        });
-
         // Here we are going to check if the adapter comes empty, then we make a request
         if(pokemonAdapter == null){
             ArrayList<Pokemon> pokemonList = new ArrayList<Pokemon>();
@@ -69,7 +61,35 @@ public class PokemonListFragment extends Fragment {
 
     // In this method we just make the request to the Class
     public void runTask(){
-        PokemonListApiTask apiTask = new PokemonListApiTask(pokemonAdapter, loadingText, listView, progressBar);
-        apiTask.execute();
+        /*PokemonListApiTask apiTask = new PokemonListApiTask(pokemonAdapter,
+                listView,progressBarLoading);
+        apiTask.execute();*/
+        listView.setVisibility(View.INVISIBLE);
+        progressBar.setVisibility(View.VISIBLE);
+
+        GsonRequest<Pokemon[]> getPersons =
+                new GsonRequest<Pokemon[]>("http://mi-pokedex.herokuapp.com/api/v1/pokemons", Pokemon[].class,
+
+                        new Response.Listener<Pokemon[]>() {
+                            @Override
+                            public void onResponse(Pokemon[] response) {
+                                List<Pokemon> pokemons = Arrays.asList(response);
+                                if(pokemons!=null){
+                                    pokemonAdapter.clear();
+                                    pokemonAdapter.addAll(pokemons);
+                                }
+                                progressBar.setVisibility(View.INVISIBLE);
+                                listView.setVisibility(View.VISIBLE);
+                            }
+
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        progressBar.setVisibility(View.INVISIBLE);
+                        listView.setVisibility(View.VISIBLE);
+                    }
+                });
+
+        PokedexApplication.getInstance().addToRequestQueue(getPersons);
     }
 }
