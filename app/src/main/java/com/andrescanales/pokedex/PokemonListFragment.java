@@ -1,10 +1,12 @@
 package com.andrescanales.pokedex;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -28,6 +30,28 @@ public class PokemonListFragment extends Fragment {
     private TextView loadingText;
     private ProgressBar progressBar;
     private ListView listView;
+    private Callbacks mCallbacks = sDummyCallbacks;
+
+    public interface Callbacks {
+        public void onItemSelected(String nombre);
+    }
+
+    private static Callbacks sDummyCallbacks = new Callbacks() {
+        @Override
+        public void onItemSelected(String nombre) {
+
+        }
+    };
+
+    public void onAttach(Activity activity){
+        super.onAttach(activity);
+        if (!(activity instanceof Callbacks)){
+            throw new IllegalStateException(
+                    "Activity Must implement callbacks"
+            );
+        }
+        mCallbacks = (Callbacks) activity;
+    }
 
     public PokemonListFragment(){
     }
@@ -48,6 +72,13 @@ public class PokemonListFragment extends Fragment {
             runTask();
         }
         listView.setAdapter(pokemonAdapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Pokemon pokemon = (Pokemon) listView.getAdapter().getItem(i);
+                mCallbacks.onItemSelected(pokemon.getNombre());
+            }
+        });
         return rootView;
     }
 

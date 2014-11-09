@@ -10,7 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity implements PokemonListFragment.Callbacks{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +22,13 @@ public class MainActivity extends ActionBarActivity {
                     .add(R.id.container, new PokemonListFragment())
                     .commit();
         }
+    }
+
+    @Override
+    public void onItemSelected(String nombre) {
+        Intent detailIntent = new Intent(this, PokemonDetail.class);
+        detailIntent.putExtra("nombre", nombre);
+        startActivity(detailIntent);
     }
 
     @Override
