@@ -25,9 +25,10 @@ public class MainActivity extends ActionBarActivity implements PokemonListFragme
     }
 
     @Override
-    public void onItemSelected(String nombre) {
+    public void onItemSelected(Pokemon pokemon) {
         Intent detailIntent = new Intent(this, PokemonDetail.class);
-        detailIntent.putExtra("nombre", nombre);
+        //detailIntent.putExtra("nombre", nombre);
+        detailIntent.putExtra("pokemon", pokemon);
         startActivity(detailIntent);
     }
 

@@ -2,14 +2,11 @@ package com.andrescanales.pokedex;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
-import android.view.Menu;
-import android.view.MenuItem;
 
 public class PokemonDetail extends ActionBarActivity {
 
-    private String mCurrentNombre;
+    private Pokemon mpokemon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,13 +18,13 @@ public class PokemonDetail extends ActionBarActivity {
         }
 
         if (savedInstanceState != null) {
-            mCurrentNombre = savedInstanceState.getString("mCurrentNombre");
+            mpokemon = savedInstanceState.getParcelable("pokemon");
         } else {
-            String nombre = getIntent().getStringExtra("nombre");
-            mCurrentNombre = nombre;
+            Pokemon pokemon = getIntent().getParcelableExtra("pokemon");
+            mpokemon = pokemon;
         }
 
-        PokemonDetailFragment fragment = PokemonDetailFragment.newInstance(mCurrentNombre);
+        PokemonDetailFragment fragment = PokemonDetailFragment.newInstance(mpokemon);
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.pokemon_detail_container, fragment).commit();
     }
@@ -36,7 +33,7 @@ public class PokemonDetail extends ActionBarActivity {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString("mCurrentNombre", mCurrentNombre);
+        outState.putParcelable("pokemon", mpokemon);
     }
 
     @Override
@@ -44,22 +41,4 @@ public class PokemonDetail extends ActionBarActivity {
         super.onConfigurationChanged(newConfig);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.pokemon_detail, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }else if(id == android.R.id.home){
-            NavUtils.navigateUpFromSameTask(this);
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 }

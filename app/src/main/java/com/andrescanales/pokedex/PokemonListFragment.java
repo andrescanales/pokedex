@@ -33,12 +33,12 @@ public class PokemonListFragment extends Fragment {
     private Callbacks mCallbacks = sDummyCallbacks;
 
     public interface Callbacks {
-        public void onItemSelected(String nombre);
+        public void onItemSelected(Pokemon pokemon);
     }
 
     private static Callbacks sDummyCallbacks = new Callbacks() {
         @Override
-        public void onItemSelected(String nombre) {
+        public void onItemSelected(Pokemon pokemon) {
 
         }
     };
@@ -76,7 +76,7 @@ public class PokemonListFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Pokemon pokemon = (Pokemon) listView.getAdapter().getItem(i);
-                mCallbacks.onItemSelected(pokemon.getNombre());
+                mCallbacks.onItemSelected(pokemon);
             }
         });
         return rootView;
