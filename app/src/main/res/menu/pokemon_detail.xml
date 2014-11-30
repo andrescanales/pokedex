@@ -23,9 +23,9 @@
         />
 
     <item
-        android:id="@+id/action_llamar"
-        android:title="Llamar"
-        android:icon="@android:drawable/ic_dialog_dialer"
+        android:id="@+id/action_mapa"
+        android:title="Mapa"
+        android:icon="@android:drawable/ic_dialog_map"
         app:showAsAction="ifRoom"
         />
 </menu>

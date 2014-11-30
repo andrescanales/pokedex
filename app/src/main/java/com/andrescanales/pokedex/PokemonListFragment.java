@@ -92,9 +92,7 @@ public class PokemonListFragment extends Fragment {
 
     // In this method we just make the request to the Class
     public void runTask(){
-        /*PokemonListApiTask apiTask = new PokemonListApiTask(pokemonAdapter,
-                listView,progressBarLoading);
-        apiTask.execute();*/
+
         listView.setVisibility(View.INVISIBLE);
         progressBar.setVisibility(View.VISIBLE);
 

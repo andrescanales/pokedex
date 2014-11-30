@@ -94,10 +94,13 @@ public class PokemonDetailFragment extends Fragment {
                 startActivity(intent);
                 return true;
             }
-        }else if(id == R.id.action_llamar){
-            Intent intent = new Intent(Intent.ACTION_CALL,
+        }else if(id == R.id.action_mapa){
+            String uri = "geo:0,0?q=MCNAMARA+TERMINAL+ROMULUS+MI+48174";
+            Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+            startActivity(i);
+            /*Intent intent = new Intent(Intent.ACTION_CALL,
                     Uri.parse("tel: 25621539"));
-            startActivity(intent);
+            startActivity(intent);*/
             return true;
         }
         return super.onOptionsItemSelected(item);

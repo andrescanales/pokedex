@@ -22,6 +22,7 @@ public class PokemonDetail extends ActionBarActivity {
         } else {
             Pokemon pokemon = getIntent().getParcelableExtra("pokemon");
             mpokemon = pokemon;
+            Pokemon avatar = getIntent().getParcelableExtra("avatar");
         }
 
         PokemonDetailFragment fragment = PokemonDetailFragment.newInstance(mpokemon);
